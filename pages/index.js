@@ -1,8 +1,10 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Layout from '../components/layout'
 
 export default function Home() {
   return (
+    <Layout>
     <div className={styles.container}>
       <Head>
         <title>Create Next App</title>
@@ -48,6 +50,18 @@ export default function Home() {
             </p>
           </a>
         </div>
+
+        <div className="productos">
+          <div className="producto">
+            No se afecta con el CSS de /styles/Productos.module.css ni con el otro CSS del componente
+            <button>add</button>
+          </div>
+          <div className="producto">
+            No se afecta con el CSS de /styles/Productos.module.css
+            <button>add</button>
+          </div>
+        </div>
+        
       </main>
 
       <footer className={styles.footer}>
@@ -61,5 +75,6 @@ export default function Home() {
         </a>
       </footer>
     </div>
+    </Layout>
   )
 }

@@ -1,0 +1,7 @@
+.producto {
+  display: block;
+  width: 200px;
+  height: 200px;
+  background-color: gray;
+  border: 2px solid red;
+}
