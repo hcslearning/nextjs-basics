@@ -2,49 +2,82 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
 import axios from 'axios'
+import useSWR from 'swr'
 
-export default function Home({ usuarios }) {
+/**
+ * Consigue datos remotos desde el lado del cliente
+ * Bueno para datos que no son importantes para SEO
+ * usando libreria SWR
+ */
+function FotoPerro() {
+  const {data, error} = useSWR('https://random.dog/woof.json', async (...args) => {
+    const res = await fetch( args[0] )
+    return res.json()
+  });
+
+  if (error) return <div>failed to load</div>
+  if (!data) return <div>loading...</div>
+
+  switch ( data.url.substring(-3, 3) ) {
+    case 'mp4':
+      return <video controls><source src={data.url} type="video/mp4" /></video>
+    default:
+      return  <img src={data.url} alt="foto aleatoria perro" style={{width: '30%', height: '30%'}} />
+  }
+}
+
+export default function Home({ usuarios }) {  
   return (
     <Layout>
-    <div className={styles.container}>
-      <Head>
-        <title>Aprendiendo NextJS</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <div className={styles.container}>
+        <Head>
+          <title>Aprendiendo NextJS</title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
 
       <main className={styles.main}>
         <h1 className={styles.title}>
           Aprendiendo NextJS
         </h1>
-      <div className="productos">
-          <div className="producto">
-            No se afecta con el CSS de /styles/Productos.module.css ni con el otro CSS del componente
-            <button>add</button>
-          </div>
-          <div className="producto">
-            No se afecta con el CSS de /styles/Productos.module.css
-            <button>add</button>
-          </div>
+
+        <div className="foto-perro">
+          <FotoPerro />
         </div>
 
-        <h3>Usuarios</h3>
-        <ul>
-          {usuarios.map(  
-            (u) => <li key={u.id}>{u.id} - {u.name} - {u.email}</li>
-          )}
-        </ul>
+        <div className="productos">
+            <div className="producto">
+              No se afecta con el CSS de /styles/Productos.module.css ni con el otro CSS del componente
+              <button>add</button>
+            </div>
+            <div className="producto">
+              No se afecta con el CSS de /styles/Productos.module.css
+              <button>add</button>
+            </div>
+          </div>
+
+          {/* Prefetched data con getStaticProps() - Útil para SEO */}
+          <h3>Usuarios</h3>
+          <ul>
+            {usuarios.map(  
+              (u) => <li key={u.id}>{u.id} - {u.name} - {u.email}</li>
+            )}
+          </ul>
+          {/* END Prefetched data con getStaticProps() */}
+
       </main>
 
-      <footer className={styles.footer}>
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-      </footer>
-    </div>
+        <footer className={styles.footer}>
+            Powered by{' '}
+            <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+
+        </footer>
+      </div>
     </Layout>
   )
 }
 
 async function getUsuariosWS() {
+  // podemos usar Axios, la función nativa fetch() u otra librería
   let usuarios = await axios.get('https://jsonplaceholder.typicode.com/users')
   return usuarios.data
 }
@@ -123,3 +156,4 @@ export async function getStaticProps() {
   }
  }
  */
+
