@@ -30,7 +30,7 @@ export default function Home({ usuarios }) {
         <h3>Usuarios</h3>
         <ul>
           {usuarios.map(  
-            (u) => <li>{u.id} - {u.name} - {u.email}</li>
+            (u) => <li key={u.id}>{u.id} - {u.name} - {u.email}</li>
           )}
         </ul>
       </main>
@@ -111,3 +111,15 @@ export async function getStaticProps() {
     }
   }
 }
+
+/**
+ * You should use getServerSideProps only if you need to pre-render a page whose data must be fetched at request time. Time to first byte (TTFB) will be slower than getStaticProps because the server must compute the result on every request, and the result cannot be cached by a CDN without extra configuration.
+ * 
+ export async function getServerSideProps(context) {
+   return {
+    props: {
+      usuarios
+    }
+  }
+ }
+ */
