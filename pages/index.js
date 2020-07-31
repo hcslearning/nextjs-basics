@@ -81,6 +81,9 @@ export default function Home({ productos }) {
   )
 }
 
+/**
+ * Esta funcion debería llamar datos de una API Externa, BD u otro
+ */
 function getProductos() {
   return [
     {id: 1, nombre: 'Producto 1', precio: 10990},
