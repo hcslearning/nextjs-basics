@@ -2,7 +2,7 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Layout from '../components/layout'
 
-export default function Home() {
+export default function Home({ productos }) {
   return (
     <Layout>
     <div className={styles.container}>
@@ -50,8 +50,10 @@ export default function Home() {
             </p>
           </a>
         </div>
+      </main>
 
-        <div className="productos">
+      <main>
+      <div className="productos">
           <div className="producto">
             No se afecta con el CSS de /styles/Productos.module.css ni con el otro CSS del componente
             <button>add</button>
@@ -61,20 +63,37 @@ export default function Home() {
             <button>add</button>
           </div>
         </div>
-        
+
+        <h3>Productos Externos</h3>
+        <ul>
+          {productos.map(  
+            (p) => <li>{p.nombre} - ${p.precio}</li>
+          )}
+        </ul>
       </main>
 
       <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
           Powered by{' '}
           <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
       </footer>
     </div>
     </Layout>
   )
+}
+
+function getProductos() {
+  return [
+    {id: 1, nombre: 'Producto 1', precio: 10990},
+    {id: 2, nombre: 'Producto 2', precio: 91990},
+    {id: 3, nombre: 'Producto 3', precio: 54990},
+  ]
+}
+
+export async function getStaticProps() {
+  const productos = getProductos()
+  return {
+    props: {
+      productos
+    }
+  }
 }
