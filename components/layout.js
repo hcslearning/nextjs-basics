@@ -6,8 +6,7 @@ function Menu(){
             <ul>
                 <li><Link href="/"><a>Inicio</a></Link></li>
                 <li><Link href="productos"><a>Productos</a></Link></li>
-                <li>dos</li>
-                <li>tres</li>
+                <li><Link href="posts"><a>Posts</a></Link></li>
             </ul>
         </div>
     )

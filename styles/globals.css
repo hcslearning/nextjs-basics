@@ -18,3 +18,7 @@ a {
 ul li {
   color: red;
 }
+
+.contenedor {
+  padding: 20px;
+}
